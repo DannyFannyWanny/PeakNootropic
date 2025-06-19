@@ -8,7 +8,7 @@ function toggleMobileMenu() {
 
 // Countdown Timer
 function initCountdown() {
-    const launchDate = new Date('2024-12-31T00:00:00').getTime();
+    const launchDate = new Date(PEAK_CONFIG.launchDate).getTime();
     
     const countdownElement = document.getElementById('countdown');
     if (!countdownElement) return;
@@ -193,6 +193,22 @@ document.addEventListener('DOMContentLoaded', function() {
             trackEvent('CTA', 'click', this.dataset.cta);
         });
     });
+    
+    // WhatsApp button click tracking
+    const whatsappButton = document.querySelector('.whatsapp-button');
+    if (whatsappButton) {
+        // Set WhatsApp URL from configuration
+        whatsappButton.href = getWhatsAppURL();
+        
+        whatsappButton.addEventListener('click', function() {
+            trackEvent('Support', 'click', 'whatsapp');
+            
+            // Optional: Add a small delay to ensure tracking fires before navigation
+            setTimeout(() => {
+                // The link will navigate naturally
+            }, 100);
+        });
+    }
 });
 
 // Escape key to close mobile menu
