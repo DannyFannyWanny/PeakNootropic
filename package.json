@@ -1,0 +1,22 @@
+{
+  "name": "peak-nootropic",
+  "version": "1.0.0",
+  "description": "Peak Nootropic - Unlock Peak Mental Performance",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve .",
+    "build": "echo 'Static site - no build required'",
+    "dev": "serve ."
+  },
+  "keywords": [
+    "nootropics",
+    "cognitive-enhancement",
+    "supplements",
+    "health"
+  ],
+  "author": "Peak Nootropic",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+} 
