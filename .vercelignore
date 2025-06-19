@@ -1,0 +1,22 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+README.md
+FORM_SETUP_GUIDE.md
+
+# Development files
+node_modules/
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db 
