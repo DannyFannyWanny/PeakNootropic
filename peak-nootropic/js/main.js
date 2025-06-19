@@ -63,40 +63,67 @@ function handleSubmit(event) {
     const originalText = button.textContent;
     button.textContent = 'Processing...';
     button.classList.add('loading');
+    button.disabled = true;
     
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-        // Here you would typically send this to your backend
-        console.log('Form submitted:', { name, email });
-        
-        // Show success message
-        showSuccessMessage();
-        
-        // Reset form
-        event.target.reset();
-        
+    // Submit to Formspree (or your backend)
+    fetch(event.target.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.ok) {
+            showSuccessMessage('Thank you! You\'ve been added to the waitlist. We\'ll notify you when Peak is available.');
+            event.target.reset();
+            trackEvent('Form', 'submit', 'waitlist-success');
+        } else {
+            throw new Error('Submission failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showErrorMessage('Something went wrong. Please try again or contact us directly.');
+        trackEvent('Form', 'error', 'waitlist-error');
+    })
+    .finally(() => {
         // Reset button
         button.textContent = originalText;
         button.classList.remove('loading');
-        
-        // Track conversion
-        trackEvent('Form', 'submit', 'waitlist');
-    }, 1000);
+        button.disabled = false;
+    });
 }
 
 // Show Success Message
-function showSuccessMessage() {
-    const message = document.createElement('div');
-    message.className = 'success-message';
-    message.textContent = 'Success! Check your email for confirmation.';
+function showSuccessMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'success-message';
+    messageElement.textContent = message;
     
     // Find the form and append message
     const form = document.querySelector('form');
-    form.appendChild(message);
+    form.appendChild(messageElement);
     
     // Remove message after 5 seconds
     setTimeout(() => {
-        message.remove();
+        messageElement.remove();
+    }, 5000);
+}
+
+// Show Error Message
+function showErrorMessage(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = 'error-message';
+    messageElement.textContent = message;
+    
+    // Find the form and append message
+    const form = document.querySelector('form');
+    form.appendChild(messageElement);
+    
+    // Remove message after 5 seconds
+    setTimeout(() => {
+        messageElement.remove();
     }, 5000);
 }
 
