@@ -6,6 +6,49 @@ function toggleMobileMenu() {
     menu.classList.toggle('hidden');
 }
 
+// Countdown Timer
+function initCountdown() {
+    const launchDate = new Date('2024-12-31T00:00:00').getTime();
+    
+    const countdownElement = document.getElementById('countdown');
+    if (!countdownElement) return;
+    
+    const updateCountdown = function() {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+        
+        if (distance < 0) {
+            // Launch date has passed
+            countdownElement.innerHTML = 'Now Available!';
+            countdownElement.classList.add('text-green-600', 'font-bold');
+            return;
+        }
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        // Format the countdown display
+        let countdownText = '';
+        if (days > 0) {
+            countdownText = `${days}d ${hours}h until launch`;
+        } else if (hours > 0) {
+            countdownText = `${hours}h ${minutes}m until launch`;
+        } else if (minutes > 0) {
+            countdownText = `${minutes}m ${seconds}s until launch`;
+        } else {
+            countdownText = `${seconds}s until launch`;
+        }
+        
+        countdownElement.innerHTML = countdownText;
+    };
+    
+    // Update immediately and then every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
 // Form Submission Handler
 function handleSubmit(event) {
     event.preventDefault();
@@ -59,6 +102,9 @@ function showSuccessMessage() {
 
 // Smooth Scrolling
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize countdown timer
+    initCountdown();
+    
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {

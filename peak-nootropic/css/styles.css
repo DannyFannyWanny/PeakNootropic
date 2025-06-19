@@ -160,3 +160,28 @@ html {
         font-size: 12pt;
     }
 }
+
+/* Countdown Timer Styles */
+#countdown {
+    font-family: 'Inter', monospace;
+    letter-spacing: 0.5px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Countdown container hover effect */
+#countdown {
+    transition: all 0.3s ease;
+}
+
+#countdown:hover {
+    transform: scale(1.05);
+}
